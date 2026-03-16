@@ -36,10 +36,10 @@ export const ScenarioResults = ({
   };
 
   return (
-    <div className="space-y-4 animate-fade-in-up">
+    <div className="space-y-5 animate-fade-in-up">
       {/* Total Stake Summary */}
       <div className="flex items-center justify-between px-1">
-        <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2 uppercase tracking-wide">
           <TrendingUp className="h-4 w-4" />
           {t("results.scenarios")}
         </h3>
@@ -52,7 +52,7 @@ export const ScenarioResults = ({
       </div>
 
       <div
-        className={`grid gap-3 ${
+        className={`grid gap-4 ${
           results.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2"
         }`}
       >
@@ -72,8 +72,8 @@ export const ScenarioResults = ({
                     : ""
               }`}
             >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-3">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-medium">{result.scenario}</h4>
                     {isBest && (
@@ -110,7 +110,7 @@ export const ScenarioResults = ({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-xs text-muted-foreground">
                       {t("results.return")}
@@ -138,7 +138,7 @@ export const ScenarioResults = ({
 
                 {/* Profit bar */}
                 {totalStake > 0 && (
-                  <div className="mt-3 h-1 rounded-full bg-muted overflow-hidden">
+                  <div className="mt-4 h-1.5 rounded-full bg-muted overflow-hidden">
                     {isProfit ? (
                       <div
                         className="h-full bg-emerald-500/60 rounded-full transition-all duration-300"

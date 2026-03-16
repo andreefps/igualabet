@@ -52,12 +52,12 @@ export const RecommendationResults = ({
   };
 
   return (
-    <div className="space-y-4 animate-fade-in-up">
-      <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2 px-1">
+    <div className="space-y-5 animate-fade-in-up">
+      <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2 px-1 uppercase tracking-wide">
         <Target className="h-4 w-4" />
         {t("results.recommendations")}
       </h3>
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3">
         {recommendations.map((rec, index) => {
           const isBest = index === bestIndex;
 
@@ -68,8 +68,8 @@ export const RecommendationResults = ({
                 isBest ? "ring-2 ring-primary/20 border-primary/30" : ""
               }`}
             >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span className="text-primary">
                       {iconMap[rec.icon] || <Target className="h-4 w-4" />}
@@ -99,11 +99,11 @@ export const RecommendationResults = ({
                   </div>
                 </div>
 
-                <p className="text-xs text-muted-foreground mb-3">
+                <p className="text-xs text-muted-foreground mb-4">
                   {rec.description}
                 </p>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-xs text-muted-foreground">
                       {t("results.recommendedStake")}
@@ -112,8 +112,8 @@ export const RecommendationResults = ({
                       {formatCurrency(rec.recommendedStake)}
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="p-2 rounded-md bg-secondary/50">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-secondary/50">
                       <p className="text-[10px] text-muted-foreground truncate">
                         {bet1Label} {t("results.wins")}
                       </p>
@@ -128,7 +128,7 @@ export const RecommendationResults = ({
                         {formatCurrency(rec.profit1)}
                       </p>
                     </div>
-                    <div className="p-2 rounded-md bg-secondary/50">
+                    <div className="p-3 rounded-lg bg-secondary/50">
                       <p className="text-[10px] text-muted-foreground truncate">
                         {hedgeLabel} {t("results.wins")}
                       </p>

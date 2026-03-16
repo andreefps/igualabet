@@ -40,35 +40,36 @@ export default function HedgeCalculator() {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-6 py-10 sm:px-8 lg:px-12">
         <Header onReset={reset} />
 
-        <SettingsBar
-          oddsFormat={oddsFormat}
-          onOddsFormatChange={setOddsFormat}
-          bothLosePossible={bothLosePossible}
-          onBothLosePossibleChange={setBothLosePossible}
-        />
+        <div className="mt-8 space-y-8">
+          {/* Controls row */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <Tabs
+              value={mode}
+              onValueChange={(value) => setMode(value as CalculatorMode)}
+            >
+              <TabsList className="grid w-full grid-cols-2 sm:w-auto sm:inline-grid">
+                <TabsTrigger value="manual" className="text-sm px-6">
+                  {t("tabs.manualEntry")}
+                </TabsTrigger>
+                <TabsTrigger value="optimizer" className="text-sm px-6">
+                  {t("tabs.hedgeOptimizer")}
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
 
-        {/* Mode Switcher */}
-        <Tabs
-          value={mode}
-          onValueChange={(value) => setMode(value as CalculatorMode)}
-          className="mb-6"
-        >
-          <TabsList className="grid w-full grid-cols-2 max-w-xs">
-            <TabsTrigger value="manual" className="text-sm">
-              {t("tabs.manualEntry")}
-            </TabsTrigger>
-            <TabsTrigger value="optimizer" className="text-sm">
-              {t("tabs.hedgeOptimizer")}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            <SettingsBar
+              oddsFormat={oddsFormat}
+              onOddsFormatChange={setOddsFormat}
+              bothLosePossible={bothLosePossible}
+              onBothLosePossibleChange={setBothLosePossible}
+            />
+          </div>
 
-        <div className="space-y-6">
           {/* Bet Inputs */}
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-6">
             <BetInput
               bet={bet1}
               onBetChange={setBet1}

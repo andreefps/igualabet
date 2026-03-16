@@ -44,11 +44,11 @@ export const BetInput = ({
     <Card
       className={`border-l-[3px] ${borderClass} transition-all duration-200 hover:shadow-md`}
     >
-      <CardContent className="p-5">
-        <h3 className="text-sm font-medium text-muted-foreground mb-4">
+      <CardContent className="p-6">
+        <h3 className="text-sm font-semibold text-muted-foreground mb-5 uppercase tracking-wide">
           {title}
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div>
             <Label className="text-xs text-muted-foreground">
               {t("bet.label")}
@@ -57,11 +57,11 @@ export const BetInput = ({
               placeholder={t("bet.teamA")}
               value={bet.label}
               onChange={(e) => onBetChange({ ...bet, label: e.target.value })}
-              className="mt-1 h-9 text-sm bg-background"
+              className="mt-1.5 h-10 bg-background"
             />
           </div>
           <div
-            className={`grid ${showStake ? "grid-cols-2" : "grid-cols-1"} gap-3`}
+            className={`grid ${showStake ? "grid-cols-2" : "grid-cols-1"} gap-4`}
           >
             <div>
               <div className="flex items-center gap-1 mb-1">
@@ -81,7 +81,7 @@ export const BetInput = ({
                 placeholder={oddsPlaceholder}
                 value={bet.odds}
                 onChange={(e) => onBetChange({ ...bet, odds: e.target.value })}
-                className="h-9 text-sm bg-background"
+                className="h-10 bg-background"
               />
             </div>
             {showStake && (
@@ -108,7 +108,7 @@ export const BetInput = ({
                   onChange={(e) =>
                     onBetChange({ ...bet, stake: e.target.value })
                   }
-                  className="h-9 text-sm bg-background"
+                  className="h-10 bg-background"
                 />
               </div>
             )}

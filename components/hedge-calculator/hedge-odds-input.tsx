@@ -34,11 +34,11 @@ export const HedgeOddsInput = ({
 
   return (
     <Card className="border-l-[3px] border-l-muted-foreground/30 transition-all duration-200 hover:shadow-md">
-      <CardContent className="p-5">
-        <h3 className="text-sm font-medium text-muted-foreground mb-4">
+      <CardContent className="p-6">
+        <h3 className="text-sm font-semibold text-muted-foreground mb-5 uppercase tracking-wide">
           {t("bet.hedgeOdds")}
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div>
             <Label className="text-xs text-muted-foreground">
               {t("bet.label")}
@@ -47,7 +47,7 @@ export const HedgeOddsInput = ({
               placeholder={t("bet.teamB")}
               value={hedgeLabel}
               onChange={(e) => onHedgeLabelChange(e.target.value)}
-              className="mt-1 h-9 text-sm bg-background"
+              className="mt-1.5 h-10 bg-background"
             />
           </div>
           <div>
@@ -68,10 +68,10 @@ export const HedgeOddsInput = ({
               placeholder={oddsPlaceholder}
               value={hedgeOdds}
               onChange={(e) => onHedgeOddsChange(e.target.value)}
-              className="h-9 text-sm bg-background"
+              className="h-10 bg-background"
             />
           </div>
-          <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/50 text-accent-foreground">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/50 text-accent-foreground">
             <Lightbulb className="h-4 w-4 mt-0.5 shrink-0" />
             <p className="text-xs">{t("tabs.optimizerHint")}</p>
           </div>

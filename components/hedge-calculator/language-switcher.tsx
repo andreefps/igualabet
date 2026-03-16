@@ -15,7 +15,7 @@ export const LanguageSwitcher = () => {
   return (
     <button
       onClick={cycleLocale}
-      className="px-2.5 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+      className="px-3 py-2.5 rounded-xl text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
       aria-label={t("language.toggle")}
       title={t("language.toggle")}
     >

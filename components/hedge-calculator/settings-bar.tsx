@@ -34,13 +34,13 @@ export const SettingsBar = ({
   const { t } = useI18n();
 
   return (
-    <div className="flex flex-wrap items-center gap-6 mb-6">
+    <div className="flex flex-wrap items-center gap-5">
       <div className="flex items-center gap-2">
         <Label className="text-sm text-muted-foreground">
           {t("settings.oddsFormat")}
         </Label>
         <Select value={oddsFormat} onValueChange={onOddsFormatChange}>
-          <SelectTrigger className="w-32 h-8 text-sm bg-card border-border">
+          <SelectTrigger className="w-32 h-9 text-sm bg-card border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
