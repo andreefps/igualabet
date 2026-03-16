@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProvider } from "@/components/i18n-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -39,6 +40,12 @@ export const metadata: Metadata = {
     "calculadora de apostas",
     "calculadora hedge betting",
     "calculadora de apostas esportivas",
+    "calculadora de apuestas",
+    "calculadora de cobertura de apuestas",
+    "apuestas deportivas calculadora",
+    "calculateur paris sportifs",
+    "calculateur de couverture",
+    "pari couverture calculateur",
   ],
   authors: [{ name: siteName }],
   creator: siteName,
@@ -51,7 +58,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    alternateLocale: "pt_BR",
+    alternateLocale: ["pt_BR", "es_ES", "fr_FR"],
     url: siteUrl,
     siteName,
     title: "IgualaBet - Free Hedge Betting Calculator & Optimizer",
@@ -112,9 +119,9 @@ export default function RootLayout({
                 "Break-even calculator",
                 "Loss minimization",
                 "Decimal and American odds support",
-                "Multi-language (English & Portuguese)",
+                "Multi-language (English, Portuguese, Spanish & French)",
               ],
-              inLanguage: ["en", "pt-BR"],
+              inLanguage: ["en", "pt-BR", "es", "fr"],
             }),
           }}
         />
@@ -126,7 +133,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
+          <I18nProvider>
+            <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>
