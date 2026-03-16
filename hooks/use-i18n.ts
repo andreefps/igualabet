@@ -26,10 +26,10 @@ const translations: Translations = {
     fr: "IgualaBet",
   },
   "header.tagline": {
-    en: "Smart hedge betting calculator",
-    "pt-br": "Calculadora inteligente de apostas hedge",
-    es: "Calculadora inteligente de apuestas hedge",
-    fr: "Calculateur intelligent de paris de couverture",
+    en: "Compare bets and lock in profit",
+    "pt-br": "Compare apostas e garanta seu lucro",
+    es: "Compara apuestas y asegura tu ganancia",
+    fr: "Comparez vos paris et verrouillez vos profits",
   },
 
   // Settings
@@ -72,10 +72,10 @@ const translations: Translations = {
     fr: "Deuxième Pari",
   },
   "bet.hedgeOdds": {
-    en: "Hedge Odds",
-    "pt-br": "Odds do Hedge",
-    es: "Cuotas del Hedge",
-    fr: "Cotes de Couverture",
+    en: "Cover Bet",
+    "pt-br": "Contra-aposta",
+    es: "Contra-apuesta",
+    fr: "Pari Opposé",
   },
   "bet.label": {
     en: "Label",
@@ -116,22 +116,22 @@ const translations: Translations = {
     fr: "Saisie Manuelle",
   },
   "tabs.hedgeOptimizer": {
-    en: "Hedge Optimizer",
+    en: "Auto Optimizer",
     "pt-br": "Otimizador",
     es: "Optimizador",
     fr: "Optimiseur",
   },
   "tabs.availableOdds": {
-    en: "Available Odds",
-    "pt-br": "Odds Disponíveis",
-    es: "Cuotas Disponibles",
-    fr: "Cotes Disponibles",
+    en: "Opposing Odds",
+    "pt-br": "Odds Opostas",
+    es: "Cuotas Opuestas",
+    fr: "Cotes Opposées",
   },
   "tabs.optimizerHint": {
-    en: "We'll calculate the optimal stake for you",
-    "pt-br": "Calcularemos o valor ideal para você",
-    es: "Calcularemos la apuesta óptima para ti",
-    fr: "Nous calculerons la mise optimale pour vous",
+    en: "Enter the opposing odds and we'll find the best stake for you",
+    "pt-br": "Insira as odds opostas e encontraremos o melhor valor para você",
+    es: "Ingresa las cuotas opuestas y encontraremos la mejor apuesta para ti",
+    fr: "Entrez les cotes opposées et nous trouverons la meilleure mise pour vous",
   },
 
   // Results
@@ -172,10 +172,10 @@ const translations: Translations = {
     fr: "gagne",
   },
   "results.recommendedStake": {
-    en: "Recommended Stake",
-    "pt-br": "Valor Recomendado",
-    es: "Apuesta Recomendada",
-    fr: "Mise Recommandée",
+    en: "Suggested Bet",
+    "pt-br": "Valor Sugerido",
+    es: "Apuesta Sugerida",
+    fr: "Mise Suggérée",
   },
   "results.totalStake": {
     en: "Total Invested",
@@ -204,10 +204,10 @@ const translations: Translations = {
     fr: "Profit Garanti",
   },
   "strategy.guaranteedProfitDesc": {
-    en: "Lock in profit regardless of outcome",
-    "pt-br": "Garanta lucro independente do resultado",
-    es: "Asegura ganancias sin importar el resultado",
-    fr: "Verrouillez le profit quel que soit le résultat",
+    en: "You win no matter what happens",
+    "pt-br": "Você ganha independente do resultado",
+    es: "Ganas sin importar el resultado",
+    fr: "Vous gagnez quel que soit le résultat",
   },
   "strategy.breakEven": {
     en: "Break Even",
@@ -216,10 +216,10 @@ const translations: Translations = {
     fr: "Seuil de Rentabilité",
   },
   "strategy.breakEvenDesc": {
-    en: "Break even if hedge wins, profit if original wins",
-    "pt-br": "Empate se hedge vencer, lucro se aposta original vencer",
-    es: "Empate si el hedge gana, ganancia si la apuesta original gana",
-    fr: "Équilibre si la couverture gagne, profit si le pari original gagne",
+    en: "No loss if the second bet wins, profit if the first wins",
+    "pt-br": "Sem perda se a segunda aposta vencer, lucro se a primeira vencer",
+    es: "Sin pérdida si la segunda apuesta gana, ganancia si la primera gana",
+    fr: "Pas de perte si le deuxième pari gagne, profit si le premier gagne",
   },
   "strategy.minimizeLoss": {
     en: "Minimize Loss",
@@ -228,25 +228,25 @@ const translations: Translations = {
     fr: "Minimiser la Perte",
   },
   "strategy.minimizeLossDesc": {
-    en: "Balance losses to minimize worst-case scenario",
-    "pt-br": "Balance perdas para minimizar o pior cenário",
-    es: "Equilibra pérdidas para minimizar el peor escenario",
-    fr: "Équilibrez les pertes pour minimiser le pire scénario",
+    en: "Reduce your maximum possible loss across both outcomes",
+    "pt-br": "Reduza sua perda máxima possível em ambos os resultados",
+    es: "Reduce tu pérdida máxima posible en ambos resultados",
+    fr: "Réduisez votre perte maximale possible sur les deux résultats",
   },
 
   // Warning
   "warning.bothLoseTitle": {
-    en: "Both Lose Enabled",
-    "pt-br": "Ambas Perdem Habilitado",
-    es: "Ambas Pierden Habilitado",
-    fr: "Les Deux Perdent Activé",
+    en: "\"Both Lose\" is on",
+    "pt-br": "\"Ambas Perdem\" está ativo",
+    es: "\"Ambas Pierden\" está activo",
+    fr: "\"Les Deux Perdent\" est activé",
   },
   "warning.bothLoseDesc": {
-    en: "Verify this scenario is possible for your specific bets.",
+    en: "Make sure both bets can actually lose at the same time (e.g. different matches or a draw is possible).",
     "pt-br":
-      "Verifique se este cenário é possível para suas apostas específicas.",
-    es: "Verifica si este escenario es posible para tus apuestas específicas.",
-    fr: "Vérifiez si ce scénario est possible pour vos paris spécifiques.",
+      "Confirme que ambas as apostas podem realmente perder ao mesmo tempo (ex: jogos diferentes ou empate possível).",
+    es: "Asegúrate de que ambas apuestas puedan realmente perder al mismo tiempo (ej: partidos diferentes o empate posible).",
+    fr: "Assurez-vous que les deux paris peuvent réellement perdre en même temps (ex : matchs différents ou match nul possible).",
   },
 
   // Theme
@@ -307,11 +307,11 @@ const translations: Translations = {
     fr: "Combien d'argent vous pariez sur ce résultat",
   },
   "tooltip.bothCanLose": {
-    en: "Enable if both bets can lose simultaneously (e.g. different events or draw possible)",
+    en: "Turn on if it's possible for both bets to lose (e.g. they're on different matches or a draw can happen)",
     "pt-br":
-      "Ative se ambas apostas podem perder simultaneamente (ex: eventos diferentes ou empate possível)",
-    es: "Activa si ambas apuestas pueden perder simultáneamente (ej: eventos diferentes o empate posible)",
-    fr: "Activez si les deux paris peuvent perdre simultanément (ex : événements différents ou match nul possible)",
+      "Ative se for possível ambas as apostas perderem (ex: jogos diferentes ou empate possível)",
+    es: "Activa si es posible que ambas apuestas pierdan (ej: partidos diferentes o empate posible)",
+    fr: "Activez si les deux paris peuvent perdre (ex : matchs différents ou match nul possible)",
   },
 };
 
