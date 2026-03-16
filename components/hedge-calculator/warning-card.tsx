@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
+"use client";
+
 import { AlertTriangle } from "lucide-react";
 import {
   type CalculationResult,
@@ -21,25 +22,21 @@ export const WarningCard = ({
   const shouldShow =
     bothLosePossible &&
     mode === "manual" &&
-    results.some((r) => r.scenario === "Both Lose");
+    results.some((r) => r.scenario === t("results.bothLose"));
 
   if (!shouldShow) return null;
 
   return (
-    <Card className="border-amber-200 dark:border-amber-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20">
-      <CardContent className="p-4">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
-          <div>
-            <p className="font-medium text-amber-800 dark:text-amber-200">
-              {t("warning.bothLoseTitle")}
-            </p>
-            <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
-              {t("warning.bothLoseDesc")}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="flex items-start gap-3 p-4 rounded-lg bg-warning/10 border border-warning/20 animate-fade-in-up">
+      <AlertTriangle className="h-4 w-4 text-warning mt-0.5 shrink-0" />
+      <div>
+        <p className="text-sm font-medium text-warning-foreground">
+          {t("warning.bothLoseTitle")}
+        </p>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          {t("warning.bothLoseDesc")}
+        </p>
+      </div>
+    </div>
   );
 };

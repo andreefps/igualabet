@@ -70,12 +70,12 @@ export const useHedgeCalculator = () => {
 
     if (profit1WithProfit > 0 && profit2WithProfit > 0) {
       newRecommendations.push({
-        strategy: "Guaranteed Profit",
-        description: "Lock in profit regardless of outcome",
+        strategy: t("strategy.guaranteedProfit"),
+        description: t("strategy.guaranteedProfitDesc"),
         recommendedStake: profitStake,
         profit1: profit1WithProfit,
         profit2: profit2WithProfit,
-        icon: "🎯",
+        icon: "guaranteed",
       });
     }
 
@@ -86,12 +86,12 @@ export const useHedgeCalculator = () => {
       breakEvenStake * decimal2 - (stake1 + breakEvenStake);
 
     newRecommendations.push({
-      strategy: "Break Even",
-      description: "Break even if hedge bet wins, profit if original bet wins",
+      strategy: t("strategy.breakEven"),
+      description: t("strategy.breakEvenDesc"),
       recommendedStake: breakEvenStake,
       profit1: profit1WithBreakEven,
       profit2: profit2WithBreakEven,
-      icon: "⚖️",
+      icon: "breakeven",
     });
 
     // Strategy 3: Minimize Maximum Loss
@@ -101,16 +101,16 @@ export const useHedgeCalculator = () => {
       minLossStake * decimal2 - (stake1 + minLossStake);
 
     newRecommendations.push({
-      strategy: "Minimize Loss",
-      description: "Balance losses to minimize worst-case scenario",
+      strategy: t("strategy.minimizeLoss"),
+      description: t("strategy.minimizeLossDesc"),
       recommendedStake: minLossStake,
       profit1: profit1WithMinLoss,
       profit2: profit2WithMinLoss,
-      icon: "🛡️",
+      icon: "minimize",
     });
 
     setRecommendations(newRecommendations);
-  }, [bet1.stake, bet1.odds, hedgeOdds, oddsFormat, toDecimalOdds]);
+  }, [bet1.stake, bet1.odds, hedgeOdds, oddsFormat, toDecimalOdds, t]);
 
   const calculateResults = useCallback(() => {
     const stake1 = Number.parseFloat(bet1.stake) || 0;
@@ -129,7 +129,7 @@ export const useHedgeCalculator = () => {
 
     const newResults: CalculationResult[] = [];
 
-    // Scenario 1: Bet 1 wins, Bet 2 loses
+    // Scenario 1: Bet 1 wins
     const return1 = stake1 * decimal1;
     const profit1 = return1 - total;
     newResults.push({
@@ -139,7 +139,7 @@ export const useHedgeCalculator = () => {
       profitPercentage: (profit1 / total) * 100,
     });
 
-    // Scenario 2: Bet 2 wins, Bet 1 loses
+    // Scenario 2: Bet 2 wins
     const return2 = stake2 * decimal2;
     const profit2 = return2 - total;
     newResults.push({
@@ -149,10 +149,10 @@ export const useHedgeCalculator = () => {
       profitPercentage: (profit2 / total) * 100,
     });
 
-    // Scenario 3: Both lose (only if enabled)
+    // Scenario 3: Both lose
     if (bothLosePossible) {
       newResults.push({
-        scenario: "Both Lose",
+        scenario: t("results.bothLose"),
         totalReturn: 0,
         netProfit: -total,
         profitPercentage: -100,
@@ -160,7 +160,7 @@ export const useHedgeCalculator = () => {
     }
 
     setResults(newResults);
-  }, [bet1, bet2, bothLosePossible, oddsFormat, toDecimalOdds]);
+  }, [bet1, bet2, bothLosePossible, oddsFormat, toDecimalOdds, t]);
 
   const setHedgeBetValue = useCallback(
     (value: string) => {
@@ -169,6 +169,16 @@ export const useHedgeCalculator = () => {
     },
     [bet2]
   );
+
+  const reset = useCallback(() => {
+    setBet1({ odds: "", stake: "", label: t("bet.teamA") });
+    setBet2({ odds: "", stake: "", label: t("bet.teamB") });
+    setHedgeOdds("");
+    setHedgeLabel(t("bet.teamB"));
+    setResults([]);
+    setRecommendations([]);
+    setTotalStake(0);
+  }, [t]);
 
   useEffect(() => {
     if (mode === "manual") {
@@ -184,7 +194,6 @@ export const useHedgeCalculator = () => {
     mode === "manual" ? results.length > 0 : recommendations.length > 0;
 
   return {
-    // State
     mode,
     bet1,
     bet2,
@@ -195,12 +204,8 @@ export const useHedgeCalculator = () => {
     results,
     recommendations,
     totalStake,
-
-    // Computed values
     isProfitableHedge,
     hasValidInputs,
-
-    // Actions
     setMode,
     setBet1,
     setBet2,
@@ -209,5 +214,6 @@ export const useHedgeCalculator = () => {
     setBothLosePossible,
     setOddsFormat,
     setHedgeBetValue,
+    reset,
   };
 };

@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Copy, Check, Target, Shield, Scale } from "lucide-react";
 import { type HedgeRecommendation } from "@/hooks/use-hedge-calculator";
 import { useFormatters } from "@/hooks/use-formatters";
 import { useI18n } from "@/hooks/use-i18n";
@@ -10,6 +14,12 @@ interface RecommendationResultsProps {
   hedgeLabel: string;
 }
 
+const iconMap: Record<string, React.ReactNode> = {
+  guaranteed: <Target className="h-4 w-4" />,
+  breakeven: <Scale className="h-4 w-4" />,
+  minimize: <Shield className="h-4 w-4" />,
+};
+
 export const RecommendationResults = ({
   recommendations,
   bet1Label,
@@ -17,76 +27,128 @@ export const RecommendationResults = ({
 }: RecommendationResultsProps) => {
   const { formatCurrency } = useFormatters();
   const { t } = useI18n();
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   if (recommendations.length === 0) return null;
 
+  // Best = highest minimum profit (best worst-case)
+  const bestIndex = recommendations.reduce((best, rec, i) => {
+    const worstCase = Math.min(rec.profit1, rec.profit2);
+    const bestWorstCase = Math.min(
+      recommendations[best].profit1,
+      recommendations[best].profit2
+    );
+    return worstCase > bestWorstCase ? i : best;
+  }, 0);
+
+  const copyRecommendation = async (
+    rec: HedgeRecommendation,
+    index: number
+  ) => {
+    const text = `${rec.strategy}: Stake ${formatCurrency(rec.recommendedStake)}, ${bet1Label} wins: ${formatCurrency(rec.profit1)}, ${hedgeLabel} wins: ${formatCurrency(rec.profit2)}`;
+    await navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 1500);
+  };
+
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-        <Target className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+    <div className="space-y-4 animate-fade-in-up">
+      <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2 px-1">
+        <Target className="h-4 w-4" />
         {t("results.recommendations")}
       </h3>
-      <div className="grid gap-4 md:grid-cols-3">
-        {recommendations.map((rec, index) => (
-          <Card
-            key={index}
-            className="transition-all duration-200 hover:shadow-md bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600"
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">{rec.icon}</span>
-                  <h4 className="font-medium text-slate-800 dark:text-slate-100">
-                    {rec.strategy}
-                  </h4>
-                </div>
-              </div>
-              <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
-                {rec.description}
-              </p>
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">
-                    {t("results.recommendedStake")}
-                  </span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-100">
-                    {formatCurrency(rec.recommendedStake)}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 rounded border border-blue-200 dark:border-blue-700">
-                    <p className="text-slate-600 dark:text-slate-300">
-                      {bet1Label} {t("results.wins")}
-                    </p>
-                    <p
-                      className={`font-semibold ${
-                        rec.profit1 >= 0
-                          ? "text-emerald-600 dark:text-emerald-400"
-                          : "text-red-600 dark:text-red-400"
-                      }`}
-                    >
-                      {formatCurrency(rec.profit1)}
-                    </p>
+      <div className="grid gap-3 md:grid-cols-3">
+        {recommendations.map((rec, index) => {
+          const isBest = index === bestIndex;
+
+          return (
+            <Card
+              key={index}
+              className={`transition-all duration-200 hover:shadow-md group ${
+                isBest ? "ring-2 ring-primary/20 border-primary/30" : ""
+              }`}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-primary">
+                      {iconMap[rec.icon] || <Target className="h-4 w-4" />}
+                    </span>
+                    <h4 className="text-sm font-medium">{rec.strategy}</h4>
                   </div>
-                  <div className="p-2 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 rounded border border-purple-200 dark:border-purple-700">
-                    <p className="text-slate-600 dark:text-slate-300">
-                      {hedgeLabel} {t("results.wins")}
-                    </p>
-                    <p
-                      className={`font-semibold ${
-                        rec.profit2 >= 0
-                          ? "text-emerald-600 dark:text-emerald-400"
-                          : "text-red-600 dark:text-red-400"
-                      }`}
+                  <div className="flex items-center gap-1.5">
+                    {isBest && (
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-0"
+                      >
+                        {t("results.recommended")}
+                      </Badge>
+                    )}
+                    <button
+                      onClick={() => copyRecommendation(rec, index)}
+                      className="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-secondary transition-all"
+                      title={t("actions.copy")}
                     >
-                      {formatCurrency(rec.profit2)}
-                    </p>
+                      {copiedIndex === index ? (
+                        <Check className="h-3 w-3 text-emerald-600" />
+                      ) : (
+                        <Copy className="h-3 w-3 text-muted-foreground" />
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+
+                <p className="text-xs text-muted-foreground mb-3">
+                  {rec.description}
+                </p>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-xs text-muted-foreground">
+                      {t("results.recommendedStake")}
+                    </span>
+                    <span className="font-medium tabular-nums">
+                      {formatCurrency(rec.recommendedStake)}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 rounded-md bg-secondary/50">
+                      <p className="text-[10px] text-muted-foreground truncate">
+                        {bet1Label} {t("results.wins")}
+                      </p>
+                      <p
+                        className={`text-sm font-medium tabular-nums ${
+                          rec.profit1 >= 0
+                            ? "text-emerald-600 dark:text-emerald-400"
+                            : "text-red-600 dark:text-red-400"
+                        }`}
+                      >
+                        {rec.profit1 >= 0 ? "+" : ""}
+                        {formatCurrency(rec.profit1)}
+                      </p>
+                    </div>
+                    <div className="p-2 rounded-md bg-secondary/50">
+                      <p className="text-[10px] text-muted-foreground truncate">
+                        {hedgeLabel} {t("results.wins")}
+                      </p>
+                      <p
+                        className={`text-sm font-medium tabular-nums ${
+                          rec.profit2 >= 0
+                            ? "text-emerald-600 dark:text-emerald-400"
+                            : "text-red-600 dark:text-red-400"
+                        }`}
+                      >
+                        {rec.profit2 >= 0 ? "+" : ""}
+                        {formatCurrency(rec.profit2)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

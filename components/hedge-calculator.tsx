@@ -1,16 +1,21 @@
 "use client";
 
 import { useHedgeCalculator } from "@/hooks/use-hedge-calculator";
+import { useI18n } from "@/hooks/use-i18n";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Header,
+  SettingsBar,
   BetInput,
-  BetTabs,
+  HedgeOddsInput,
   ScenarioResults,
   RecommendationResults,
   WarningCard,
 } from "./hedge-calculator/index";
+import type { CalculatorMode } from "@/hooks/use-hedge-calculator";
 
 export default function HedgeCalculator() {
+  const { t } = useI18n();
   const {
     mode,
     bet1,
@@ -22,8 +27,6 @@ export default function HedgeCalculator() {
     results,
     recommendations,
     totalStake,
-    isProfitableHedge,
-    hasValidInputs,
     setMode,
     setBet1,
     setBet2,
@@ -32,37 +35,72 @@ export default function HedgeCalculator() {
     setBothLosePossible,
     setOddsFormat,
     setHedgeBetValue,
+    reset,
   } = useHedgeCalculator();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Header />
+    <div className="min-h-screen bg-background transition-colors duration-300">
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+        <Header onReset={reset} />
+
+        <SettingsBar
+          oddsFormat={oddsFormat}
+          onOddsFormatChange={setOddsFormat}
+          bothLosePossible={bothLosePossible}
+          onBothLosePossibleChange={setBothLosePossible}
+        />
+
+        {/* Mode Switcher */}
+        <Tabs
+          value={mode}
+          onValueChange={(value) => setMode(value as CalculatorMode)}
+          className="mb-6"
+        >
+          <TabsList className="grid w-full grid-cols-2 max-w-xs">
+            <TabsTrigger value="manual" className="text-sm">
+              {t("tabs.manualEntry")}
+            </TabsTrigger>
+            <TabsTrigger value="optimizer" className="text-sm">
+              {t("tabs.hedgeOptimizer")}
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
         <div className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Bet Inputs */}
+          <div className="grid md:grid-cols-2 gap-4">
             <BetInput
               bet={bet1}
               onBetChange={setBet1}
-              title="First Bet"
-              colorClass="bg-gradient-to-r from-emerald-500 to-blue-500"
+              title={t("bet.firstBet")}
+              accent="primary"
               oddsFormat={oddsFormat}
+              showStake
             />
 
-            <BetTabs
-              mode={mode}
-              onModeChange={setMode}
-              bet2={bet2}
-              onBet2Change={setBet2}
-              hedgeOdds={hedgeOdds}
-              hedgeLabel={hedgeLabel}
-              onHedgeOddsChange={setHedgeBetValue}
-              onHedgeLabelChange={setHedgeLabel}
-              oddsFormat={oddsFormat}
-            />
+            {mode === "manual" ? (
+              <BetInput
+                bet={bet2}
+                onBetChange={setBet2}
+                title={t("bet.secondBet")}
+                accent="secondary"
+                oddsFormat={oddsFormat}
+              />
+            ) : (
+              <HedgeOddsInput
+                hedgeOdds={hedgeOdds}
+                hedgeLabel={hedgeLabel}
+                onHedgeOddsChange={setHedgeBetValue}
+                onHedgeLabelChange={setHedgeLabel}
+                oddsFormat={oddsFormat}
+              />
+            )}
           </div>
 
-          {mode === "manual" && <ScenarioResults results={results} />}
+          {/* Results */}
+          {mode === "manual" && (
+            <ScenarioResults results={results} totalStake={totalStake} />
+          )}
 
           {mode === "optimizer" && (
             <RecommendationResults

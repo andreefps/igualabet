@@ -1,3 +1,5 @@
+"use client";
+
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -7,6 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 import { type OddsFormat } from "@/hooks/use-odds-converter";
 import { useI18n } from "@/hooks/use-i18n";
 
@@ -26,39 +34,37 @@ export const SettingsBar = ({
   const { t } = useI18n();
 
   return (
-    <div className="flex flex-wrap items-center gap-4 p-4 bg-slate-50 dark:bg-slate-700 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600">
-      <div className="flex items-center gap-3">
-        <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+    <div className="flex flex-wrap items-center gap-6 mb-6">
+      <div className="flex items-center gap-2">
+        <Label className="text-sm text-muted-foreground">
           {t("settings.oddsFormat")}
         </Label>
         <Select value={oddsFormat} onValueChange={onOddsFormatChange}>
-          <SelectTrigger className="w-40 bg-white dark:bg-slate-600 border-slate-300 dark:border-slate-500 text-slate-900 dark:text-slate-100">
+          <SelectTrigger className="w-32 h-8 text-sm bg-card border-border">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-slate-600 border-slate-300 dark:border-slate-500">
-            <SelectItem
-              value="decimal"
-              className="text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-500"
-            >
-              {t("settings.decimal")}
-            </SelectItem>
-            <SelectItem
-              value="american"
-              className="text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-500"
-            >
-              {t("settings.american")}
-            </SelectItem>
+          <SelectContent>
+            <SelectItem value="decimal">{t("settings.decimal")}</SelectItem>
+            <SelectItem value="american">{t("settings.american")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-3">
-        <Label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+      <div className="flex items-center gap-2">
+        <Label className="text-sm text-muted-foreground">
           {t("settings.bothCanLose")}
         </Label>
         <Switch
           checked={bothLosePossible}
           onCheckedChange={onBothLosePossibleChange}
         />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-xs">
+            <p className="text-xs">{t("tooltip.bothCanLose")}</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 
 export const useFormatters = () => {
-  const formatCurrency = useCallback((amount: number): string => {
+  const formatNumber = useCallback((amount: number): string => {
     return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(amount);
   }, []);
 
@@ -12,5 +12,5 @@ export const useFormatters = () => {
     return `${percentage >= 0 ? "+" : ""}${percentage.toFixed(2)}%`;
   }, []);
 
-  return { formatCurrency, formatPercentage };
+  return { formatCurrency: formatNumber, formatPercentage };
 };

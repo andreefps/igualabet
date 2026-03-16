@@ -1,4 +1,5 @@
-import { Languages } from "lucide-react";
+"use client";
+
 import { useI18n } from "@/hooks/use-i18n";
 
 export const LanguageSwitcher = () => {
@@ -7,17 +8,11 @@ export const LanguageSwitcher = () => {
   return (
     <button
       onClick={toggleLocale}
-      className="relative p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-600 dark:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+      className="px-2.5 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
       aria-label={t("language.toggle")}
       title={t("language.toggle")}
     >
-      <div className="flex items-center gap-2">
-        <Languages className="w-5 h-5" />
-        <span className="text-sm font-medium">
-          {locale === "en" ? "EN" : "PT"}
-        </span>
-      </div>
-      <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {locale === "en" ? "EN" : "PT"}
     </button>
   );
 };

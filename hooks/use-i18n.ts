@@ -11,23 +11,23 @@ interface Translations {
 
 const translations: Translations = {
   // Header
-  "header.title": {
-    en: "HedgeCalc",
-    "pt-br": "HedgeCalc",
+  "header.appName": {
+    en: "IgualaBet",
+    "pt-br": "IgualaBet",
   },
-  "header.subtitle": {
-    en: "Calculate hedge betting scenarios with precision",
-    "pt-br": "Calcule cenários de apostas hedge com precisão",
+  "header.tagline": {
+    en: "Smart hedge betting calculator",
+    "pt-br": "Calculadora inteligente de apostas hedge",
   },
 
   // Settings
   "settings.oddsFormat": {
-    en: "Odds Format:",
-    "pt-br": "Formato das Odds:",
+    en: "Odds Format",
+    "pt-br": "Formato das Odds",
   },
   "settings.bothCanLose": {
-    en: "Both can lose:",
-    "pt-br": "Ambas podem perder:",
+    en: "Both can lose",
+    "pt-br": "Ambas podem perder",
   },
   "settings.decimal": {
     en: "Decimal",
@@ -47,17 +47,21 @@ const translations: Translations = {
     en: "Second Bet",
     "pt-br": "Segunda Aposta",
   },
+  "bet.hedgeOdds": {
+    en: "Hedge Odds",
+    "pt-br": "Odds do Hedge",
+  },
   "bet.label": {
     en: "Label",
-    "pt-br": "Rótulo",
+    "pt-br": "Nome",
   },
   "bet.odds": {
     en: "Odds",
     "pt-br": "Odds",
   },
   "bet.stake": {
-    en: "Stake ($)",
-    "pt-br": "Valor ($)",
+    en: "Stake",
+    "pt-br": "Valor",
   },
   "bet.teamA": {
     en: "Team A",
@@ -75,7 +79,7 @@ const translations: Translations = {
   },
   "tabs.hedgeOptimizer": {
     en: "Hedge Optimizer",
-    "pt-br": "Otimizador de Hedge",
+    "pt-br": "Otimizador",
   },
   "tabs.availableOdds": {
     en: "Available Odds",
@@ -112,8 +116,20 @@ const translations: Translations = {
     "pt-br": "vence",
   },
   "results.recommendedStake": {
-    en: "Recommended Stake:",
-    "pt-br": "Valor Recomendado:",
+    en: "Recommended Stake",
+    "pt-br": "Valor Recomendado",
+  },
+  "results.totalStake": {
+    en: "Total Invested",
+    "pt-br": "Total Investido",
+  },
+  "results.bestOutcome": {
+    en: "Best Outcome",
+    "pt-br": "Melhor Resultado",
+  },
+  "results.recommended": {
+    en: "Recommended",
+    "pt-br": "Recomendado",
   },
 
   // Strategies
@@ -130,7 +146,7 @@ const translations: Translations = {
     "pt-br": "Empate",
   },
   "strategy.breakEvenDesc": {
-    en: "Break even if hedge bet wins, profit if original bet wins",
+    en: "Break even if hedge wins, profit if original wins",
     "pt-br": "Empate se hedge vencer, lucro se aposta original vencer",
   },
   "strategy.minimizeLoss": {
@@ -164,6 +180,41 @@ const translations: Translations = {
     en: "Toggle language",
     "pt-br": "Alternar idioma",
   },
+
+  // Actions
+  "actions.reset": {
+    en: "Reset",
+    "pt-br": "Limpar",
+  },
+  "actions.copy": {
+    en: "Copy",
+    "pt-br": "Copiar",
+  },
+  "actions.copied": {
+    en: "Copied!",
+    "pt-br": "Copiado!",
+  },
+
+  // Tooltips
+  "tooltip.oddsDecimal": {
+    en: "Decimal odds represent the total payout per unit staked (e.g. 2.50 means 2.50x return)",
+    "pt-br":
+      "Odds decimais representam o pagamento total por unidade apostada (ex: 2.50 significa 2.50x de retorno)",
+  },
+  "tooltip.oddsAmerican": {
+    en: "American odds: positive (+150) shows profit on 100 bet, negative (-110) shows how much to bet to win 100",
+    "pt-br":
+      "Odds americanas: positivas (+150) mostram lucro em aposta de 100, negativas (-110) mostram quanto apostar para ganhar 100",
+  },
+  "tooltip.stake": {
+    en: "How much money you're betting on this outcome",
+    "pt-br": "Quanto dinheiro você está apostando neste resultado",
+  },
+  "tooltip.bothCanLose": {
+    en: "Enable if both bets can lose simultaneously (e.g. different events or draw possible)",
+    "pt-br":
+      "Ative se ambas apostas podem perder simultaneamente (ex: eventos diferentes ou empate possível)",
+  },
 };
 
 export const useI18n = () => {
@@ -174,7 +225,6 @@ export const useI18n = () => {
     if (savedLocale && (savedLocale === "en" || savedLocale === "pt-br")) {
       setLocale(savedLocale);
     } else {
-      // Detect browser language
       const browserLang = navigator.language.toLowerCase();
       if (browserLang.startsWith("pt")) {
         setLocale("pt-br");
