@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Copy, Check, Target, Shield, Scale } from "lucide-react";
 import { type HedgeRecommendation } from "@/hooks/use-hedge-calculator";
@@ -31,7 +30,6 @@ export const RecommendationResults = ({
 
   if (recommendations.length === 0) return null;
 
-  // Best = highest minimum profit (best worst-case)
   const bestIndex = recommendations.reduce((best, rec, i) => {
     const worstCase = Math.min(rec.profit1, rec.profit2);
     const bestWorstCase = Math.min(
@@ -52,101 +50,105 @@ export const RecommendationResults = ({
   };
 
   return (
-    <div className="space-y-5 animate-fade-in-up">
-      <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2 px-1 uppercase tracking-wide">
-        <Target className="h-4 w-4" />
-        {t("results.recommendations")}
-      </h3>
-      <div className="grid gap-4 md:grid-cols-3">
+    <div className="space-y-6 animate-fade-in-up">
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          <Target className="h-4 w-4 text-primary" />
+        </div>
+        <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+          {t("results.recommendations")}
+        </h3>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-3 stagger-children">
         {recommendations.map((rec, index) => {
           const isBest = index === bestIndex;
 
           return (
-            <Card
+            <div
               key={index}
-              className={`transition-all duration-200 hover:shadow-md group ${
-                isBest ? "ring-2 ring-primary/20 border-primary/30" : ""
+              className={`group relative rounded-2xl border bg-card p-6 transition-all duration-300 hover:shadow-lg ${
+                isBest
+                  ? "gradient-border glow-primary"
+                  : "border-border hover:border-muted-foreground/30"
               }`}
             >
-              <CardContent className="p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-primary">
-                      {iconMap[rec.icon] || <Target className="h-4 w-4" />}
-                    </span>
-                    <h4 className="text-sm font-medium">{rec.strategy}</h4>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    {isBest && (
-                      <Badge
-                        variant="secondary"
-                        className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-0"
-                      >
-                        {t("results.recommended")}
-                      </Badge>
+              {/* Header */}
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-primary">
+                    {iconMap[rec.icon] || <Target className="h-4 w-4" />}
+                  </span>
+                  <h4 className="font-semibold text-[15px]">{rec.strategy}</h4>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  {isBest && (
+                    <Badge className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary border-0 font-semibold">
+                      {t("results.recommended")}
+                    </Badge>
+                  )}
+                  <button
+                    onClick={() => copyRecommendation(rec, index)}
+                    className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-secondary transition-all duration-200"
+                    title={t("actions.copy")}
+                  >
+                    {copiedIndex === index ? (
+                      <Check className="h-3.5 w-3.5 text-emerald-500" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5 text-muted-foreground" />
                     )}
-                    <button
-                      onClick={() => copyRecommendation(rec, index)}
-                      className="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-secondary transition-all"
-                      title={t("actions.copy")}
-                    >
-                      {copiedIndex === index ? (
-                        <Check className="h-3 w-3 text-emerald-600" />
-                      ) : (
-                        <Copy className="h-3 w-3 text-muted-foreground" />
-                      )}
-                    </button>
-                  </div>
+                  </button>
                 </div>
+              </div>
 
-                <p className="text-xs text-muted-foreground mb-4">
-                  {rec.description}
-                </p>
+              <p className="text-xs text-muted-foreground leading-relaxed mb-5">
+                {rec.description}
+              </p>
 
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-xs text-muted-foreground">
-                      {t("results.recommendedStake")}
-                    </span>
-                    <span className="font-medium tabular-nums">
-                      {formatCurrency(rec.recommendedStake)}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 rounded-lg bg-secondary/50">
-                      <p className="text-[10px] text-muted-foreground truncate">
-                        {bet1Label} {t("results.wins")}
-                      </p>
-                      <p
-                        className={`text-sm font-medium tabular-nums ${
-                          rec.profit1 >= 0
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-red-600 dark:text-red-400"
-                        }`}
-                      >
-                        {rec.profit1 >= 0 ? "+" : ""}
-                        {formatCurrency(rec.profit1)}
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-secondary/50">
-                      <p className="text-[10px] text-muted-foreground truncate">
-                        {hedgeLabel} {t("results.wins")}
-                      </p>
-                      <p
-                        className={`text-sm font-medium tabular-nums ${
-                          rec.profit2 >= 0
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-red-600 dark:text-red-400"
-                        }`}
-                      >
-                        {rec.profit2 >= 0 ? "+" : ""}
-                        {formatCurrency(rec.profit2)}
-                      </p>
-                    </div>
-                  </div>
+              {/* Recommended stake */}
+              <div className="flex items-baseline justify-between mb-4 pb-4 border-b border-border/60">
+                <span className="text-[11px] text-muted-foreground/70 uppercase tracking-wider">
+                  {t("results.recommendedStake")}
+                </span>
+                <span className="font-semibold font-mono text-base">
+                  {formatCurrency(rec.recommendedStake)}
+                </span>
+              </div>
+
+              {/* Outcomes */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 rounded-xl bg-secondary/40">
+                  <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider truncate mb-1">
+                    {bet1Label} {t("results.wins")}
+                  </p>
+                  <p
+                    className={`text-base font-semibold font-mono ${
+                      rec.profit1 >= 0
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-red-500 dark:text-red-400"
+                    }`}
+                  >
+                    {rec.profit1 >= 0 ? "+" : ""}
+                    {formatCurrency(rec.profit1)}
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="p-3 rounded-xl bg-secondary/40">
+                  <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider truncate mb-1">
+                    {hedgeLabel} {t("results.wins")}
+                  </p>
+                  <p
+                    className={`text-base font-semibold font-mono ${
+                      rec.profit2 >= 0
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-red-500 dark:text-red-400"
+                    }`}
+                  >
+                    {rec.profit2 >= 0 ? "+" : ""}
+                    {formatCurrency(rec.profit2)}
+                  </p>
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>

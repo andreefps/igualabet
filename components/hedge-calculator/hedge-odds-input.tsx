@@ -8,7 +8,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info, Lightbulb } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { type OddsFormat } from "@/hooks/use-odds-converter";
 import { useI18n } from "@/hooks/use-i18n";
 
@@ -33,50 +32,54 @@ export const HedgeOddsInput = ({
     oddsFormat === "decimal" ? "tooltip.oddsDecimal" : "tooltip.oddsAmerican";
 
   return (
-    <Card className="border-l-[3px] border-l-muted-foreground/30 transition-all duration-200 hover:shadow-md">
-      <CardContent className="p-6">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-5 uppercase tracking-wide">
+    <div className="relative rounded-2xl border border-border hover:border-muted-foreground/30 bg-card p-7 transition-all duration-300 hover:shadow-lg">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40" />
+        <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
           {t("bet.hedgeOdds")}
         </h3>
-        <div className="space-y-4">
-          <div>
-            <Label className="text-xs text-muted-foreground">
-              {t("bet.label")}
-            </Label>
-            <Input
-              placeholder={t("bet.teamB")}
-              value={hedgeLabel}
-              onChange={(e) => onHedgeLabelChange(e.target.value)}
-              className="mt-1.5 h-10 bg-background"
-            />
-          </div>
-          <div>
-            <div className="flex items-center gap-1 mb-1">
-              <Label className="text-xs text-muted-foreground">
-                {t("tabs.availableOdds")}
-              </Label>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Info className="h-3 w-3 text-muted-foreground/60 cursor-help" />
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p className="text-xs">{t(tooltipKey)}</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-            <Input
-              placeholder={oddsPlaceholder}
-              value={hedgeOdds}
-              onChange={(e) => onHedgeOddsChange(e.target.value)}
-              className="h-10 bg-background"
-            />
-          </div>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/50 text-accent-foreground">
-            <Lightbulb className="h-4 w-4 mt-0.5 shrink-0" />
-            <p className="text-xs">{t("tabs.optimizerHint")}</p>
-          </div>
+      </div>
+
+      <div className="space-y-5">
+        <div>
+          <Label className="text-xs font-medium text-muted-foreground/80 mb-2 block">
+            {t("bet.label")}
+          </Label>
+          <Input
+            placeholder={t("bet.teamB")}
+            value={hedgeLabel}
+            onChange={(e) => onHedgeLabelChange(e.target.value)}
+            className="h-11 bg-background/60 border-border/60 focus:bg-background transition-colors"
+          />
         </div>
-      </CardContent>
-    </Card>
+        <div>
+          <div className="flex items-center gap-1.5 mb-2">
+            <Label className="text-xs font-medium text-muted-foreground/80">
+              {t("tabs.availableOdds")}
+            </Label>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-3 w-3 text-muted-foreground/40 cursor-help hover:text-muted-foreground transition-colors" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p className="text-xs">{t(tooltipKey)}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <Input
+            placeholder={oddsPlaceholder}
+            value={hedgeOdds}
+            onChange={(e) => onHedgeOddsChange(e.target.value)}
+            className="h-11 bg-background/60 border-border/60 font-mono text-[15px] focus:bg-background transition-colors"
+          />
+        </div>
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-accent/40 border border-accent/60">
+          <Lightbulb className="h-4 w-4 mt-0.5 shrink-0 text-accent-foreground/70" />
+          <p className="text-xs text-accent-foreground/80 leading-relaxed">
+            {t("tabs.optimizerHint")}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };

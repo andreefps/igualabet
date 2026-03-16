@@ -10,55 +10,60 @@
 
 @layer base {
   :root {
-    --background: 40 15% 95%;
-    --foreground: 20 15% 15%;
-    --card: 40 10% 99%;
-    --card-foreground: 20 15% 15%;
-    --popover: 40 10% 99%;
-    --popover-foreground: 20 15% 15%;
-    --primary: 172 55% 35%;
+    --background: 42 25% 93%;
+    --foreground: 225 20% 18%;
+    --card: 42 20% 97%;
+    --card-foreground: 225 20% 18%;
+    --popover: 42 20% 97%;
+    --popover-foreground: 225 20% 18%;
+    --primary: 168 60% 36%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 10% 91%;
-    --secondary-foreground: 20 15% 25%;
-    --muted: 40 8% 88%;
-    --muted-foreground: 20 5% 45%;
-    --accent: 172 35% 90%;
-    --accent-foreground: 172 55% 25%;
-    --destructive: 0 72% 51%;
+    --secondary: 42 15% 88%;
+    --secondary-foreground: 225 15% 30%;
+    --muted: 42 12% 85%;
+    --muted-foreground: 225 8% 46%;
+    --accent: 168 40% 88%;
+    --accent-foreground: 168 60% 26%;
+    --destructive: 4 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --success: 152 55% 40%;
-    --success-foreground: 152 55% 95%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 38 40% 15%;
-    --border: 30 8% 85%;
-    --input: 30 8% 85%;
-    --ring: 172 55% 35%;
-    --radius: 0.75rem;
+    --success: 158 60% 42%;
+    --success-foreground: 158 60% 95%;
+    --warning: 40 95% 52%;
+    --warning-foreground: 40 40% 15%;
+    --border: 42 12% 82%;
+    --input: 42 12% 82%;
+    --ring: 168 60% 36%;
+    --radius: 0.625rem;
+
+    --surface-glow: 168 60% 36%;
   }
+
   .dark {
-    --background: 220 14% 14%;
-    --foreground: 220 10% 90%;
-    --card: 220 12% 18%;
-    --card-foreground: 220 10% 90%;
-    --popover: 220 12% 18%;
-    --popover-foreground: 220 10% 90%;
-    --primary: 172 50% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 10% 22%;
-    --secondary-foreground: 220 10% 85%;
-    --muted: 220 8% 25%;
-    --muted-foreground: 220 5% 55%;
-    --accent: 172 25% 22%;
-    --accent-foreground: 172 50% 75%;
-    --destructive: 0 62% 45%;
+    --background: 225 18% 11%;
+    --foreground: 42 12% 88%;
+    --card: 225 15% 15%;
+    --card-foreground: 42 12% 88%;
+    --popover: 225 15% 15%;
+    --popover-foreground: 42 12% 88%;
+    --primary: 168 55% 48%;
+    --primary-foreground: 225 20% 8%;
+    --secondary: 225 12% 20%;
+    --secondary-foreground: 42 10% 80%;
+    --muted: 225 10% 23%;
+    --muted-foreground: 225 8% 52%;
+    --accent: 168 30% 18%;
+    --accent-foreground: 168 50% 70%;
+    --destructive: 4 65% 50%;
     --destructive-foreground: 0 0% 100%;
-    --success: 152 50% 45%;
-    --success-foreground: 152 50% 95%;
-    --warning: 38 80% 55%;
-    --warning-foreground: 38 80% 10%;
-    --border: 220 8% 25%;
-    --input: 220 8% 25%;
-    --ring: 172 50% 45%;
+    --success: 158 55% 48%;
+    --success-foreground: 158 50% 92%;
+    --warning: 40 85% 58%;
+    --warning-foreground: 40 85% 10%;
+    --border: 225 10% 22%;
+    --input: 225 10% 22%;
+    --ring: 168 55% 48%;
+
+    --surface-glow: 168 55% 48%;
   }
 }
 
@@ -67,14 +72,86 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
+/* ─── Noise texture overlay ─── */
+.noise-bg {
+  position: relative;
+}
+.noise-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+.dark .noise-bg::before {
+  opacity: 0.04;
+}
+
+/* ─── Glow effects ─── */
+.glow-primary {
+  box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.15),
+    0 0 50px -10px hsl(var(--primary) / 0.08);
+}
+
+.dark .glow-primary {
+  box-shadow: 0 0 25px -5px hsl(var(--primary) / 0.2),
+    0 0 60px -10px hsl(var(--primary) / 0.1);
+}
+
+/* ─── Gradient border ─── */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary) / 0.4),
+    hsl(var(--primary) / 0.05),
+    hsl(var(--primary) / 0.2)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Dot pattern ─── */
+.dot-pattern {
+  background-image: radial-gradient(
+    hsl(var(--foreground) / 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+.dark .dot-pattern {
+  background-image: radial-gradient(
+    hsl(var(--foreground) / 0.04) 1px,
+    transparent 1px
+  );
+}
+
+/* ─── Animations ─── */
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -82,6 +159,65 @@
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 .animate-fade-in-up {
-  animation: fade-in-up 0.3s ease-out;
+  animation: fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  animation: fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* ─── Mono numbers ─── */
+.font-mono-numbers {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }

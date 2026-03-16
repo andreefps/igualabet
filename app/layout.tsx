@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/components/i18n-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const geist = Geist({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-outfit",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 const siteUrl = "https://igualabet.com";
@@ -126,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geist.variable} font-sans`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} font-sans noise-bg`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

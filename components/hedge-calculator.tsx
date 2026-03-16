@@ -39,22 +39,30 @@ export default function HedgeCalculator() {
   } = useHedgeCalculator();
 
   return (
-    <div className="min-h-screen bg-background transition-colors duration-300">
-      <div className="mx-auto max-w-5xl px-6 py-10 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-background dot-pattern transition-colors duration-500">
+      <div className="mx-auto max-w-6xl px-6 py-8 sm:px-10 lg:px-16">
+        {/* Header */}
         <Header onReset={reset} />
 
-        <div className="mt-8 space-y-8">
-          {/* Controls row */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        {/* Main content */}
+        <div className="mt-10 space-y-10">
+          {/* Controls bar */}
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <Tabs
               value={mode}
               onValueChange={(value) => setMode(value as CalculatorMode)}
             >
-              <TabsList className="grid w-full grid-cols-2 sm:w-auto sm:inline-grid">
-                <TabsTrigger value="manual" className="text-sm px-6">
+              <TabsList className="grid w-full grid-cols-2 sm:w-auto sm:inline-grid h-11 p-1 bg-secondary/60 backdrop-blur-sm">
+                <TabsTrigger
+                  value="manual"
+                  className="text-sm font-medium px-8 data-[state=active]:shadow-md transition-all"
+                >
                   {t("tabs.manualEntry")}
                 </TabsTrigger>
-                <TabsTrigger value="optimizer" className="text-sm px-6">
+                <TabsTrigger
+                  value="optimizer"
+                  className="text-sm font-medium px-8 data-[state=active]:shadow-md transition-all"
+                >
                   {t("tabs.hedgeOptimizer")}
                 </TabsTrigger>
               </TabsList>
@@ -68,8 +76,8 @@ export default function HedgeCalculator() {
             />
           </div>
 
-          {/* Bet Inputs */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Bet inputs */}
+          <div className="grid gap-6 lg:grid-cols-2 stagger-children">
             <BetInput
               bet={bet1}
               onBetChange={setBet1}
@@ -116,6 +124,11 @@ export default function HedgeCalculator() {
             mode={mode}
             results={results}
           />
+        </div>
+
+        {/* Footer accent line */}
+        <div className="mt-16 mb-8 flex justify-center">
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         </div>
       </div>
     </div>

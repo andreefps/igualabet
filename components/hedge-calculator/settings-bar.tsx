@@ -34,13 +34,13 @@ export const SettingsBar = ({
   const { t } = useI18n();
 
   return (
-    <div className="flex flex-wrap items-center gap-5">
-      <div className="flex items-center gap-2">
-        <Label className="text-sm text-muted-foreground">
+    <div className="flex flex-wrap items-center gap-6">
+      <div className="flex items-center gap-2.5">
+        <Label className="text-xs font-medium text-muted-foreground/80">
           {t("settings.oddsFormat")}
         </Label>
         <Select value={oddsFormat} onValueChange={onOddsFormatChange}>
-          <SelectTrigger className="w-32 h-9 text-sm bg-card border-border">
+          <SelectTrigger className="w-32 h-9 text-sm bg-card/80 border-border/60 backdrop-blur-sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -49,8 +49,8 @@ export const SettingsBar = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-2">
-        <Label className="text-sm text-muted-foreground">
+      <div className="flex items-center gap-2.5">
+        <Label className="text-xs font-medium text-muted-foreground/80">
           {t("settings.bothCanLose")}
         </Label>
         <Switch
@@ -59,7 +59,7 @@ export const SettingsBar = ({
         />
         <Tooltip>
           <TooltipTrigger asChild>
-            <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+            <Info className="h-3.5 w-3.5 text-muted-foreground/50 cursor-help hover:text-muted-foreground transition-colors" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs">
             <p className="text-xs">{t("tooltip.bothCanLose")}</p>
